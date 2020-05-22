@@ -51,6 +51,7 @@ class MinStack:
     def push(self, x: int) -> None:
         if len(self.min) == 0 or x <= self.min[-1]:
             self.min.append(x)
+        # 同步
         else:
             self.min.append(self.min[-1])
         self.stack.append(x)
@@ -58,8 +59,13 @@ class MinStack:
     def pop(self) -> None:
         # 或者异步，只在两个栈栈顶相等的时候min出栈
         if self.stack:
+            # 异步
+            if self.stack[-1] == self.min[-1]:
+                self.min.pop()
             self.stack.pop()
-            self.min.pop()
+            # 同步
+            # self.min.pop()
+            # self.stack.pop()
 
     def top(self) -> int:
         if self.stack:
