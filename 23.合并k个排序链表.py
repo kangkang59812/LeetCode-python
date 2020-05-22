@@ -37,68 +37,53 @@
 
 class Solution:
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
-        # 超时
-        # def findNumber(lists):
-        #     nonlocal finish
-        #     val = float('inf')
-        #     index = 0
-        #     for i in range(len(lists)):
-        #         if not finish[i] and lists[i].val < val:
-        #             index = i
-        #             val = lists[i].val
-        #     return index
-        # if not lists:
+
+        # def mergeTwoLists(l1, l2):
+        #     p1 = l1
+        #     p2 = l2
+        #     p = ListNode(-1)
+        #     head = p
+        #     while p1 and p2:
+        #         if p1.val < p2.val:
+        #             p.next = p1
+        #             p1 = p1.next
+        #             p = p.next
+        #         else:
+        #             p.next = p2
+        #             p2 = p2.next
+        #             p = p.next
+
+        #     p.next = p1 if p1 else p2
+        #     return head.next
+
+        # n = len(lists)
+        # if n == 0:
         #     return None
-        # finish = [False]*(len(lists))
-        # for i in range(len(lists)):
-        #     if not lists[i]:
-        #         finish[i] = True
-        # newhead = ListNode(-1)
-        # p = newhead
-        # while True:
-        #     if sum(finish) == len(lists):
-        #         break
-        #     index = findNumber(lists)
-        #     tmp = lists[index]
-        #     lists[index] = lists[index].next
-        #     tmp.next = None
 
-        #     if not lists[index]:
-        #         finish[index] = True
-        #     newhead.next = tmp
-        #     newhead = newhead.next
-        # return p.next
-        def mergeTwoLists(l1, l2):
-            p1 = l1
-            p2 = l2
-            p = ListNode(-1)
-            head = p
-            while p1 and p2:
-                if p1.val < p2.val:
-                    p.next = p1
-                    p1 = p1.next
-                    p = p.next
-                else:
-                    p.next = p2
-                    p2 = p2.next
-                    p = p.next
-
-            p.next = p1 if p1 else p2
-            return head.next
-
-        n = len(lists)
-        if n == 0:
-            return None
-
-        while n > 1:
-            i = 0
-            j = n-1
-            while i < j:
-                lists[i] = mergeTwoLists(lists[i], lists[j])
-                del lists[j]
-                i += 1
-                j -= 1
-            n = len(lists)
-        return lists[0]
+        # while n > 1:
+        #     i = 0
+        #     j = n-1
+        #     while i < j:
+        #         lists[i] = mergeTwoLists(lists[i], lists[j])
+        #         del lists[j]
+        #         i += 1
+        #         j -= 1
+        #     n = len(lists)
+        # return lists[0]
+        import heapq
+        que = []
+        for index, node in enumerate(lists):
+            if node:
+                heapq.heappush(que, (node.val, index))
+        newhead = ListNode(-1)
+        p = newhead
+        while que:
+            val, index = heapq.heappop(que)
+            p.next = lists[index]
+            p = p.next
+            lists[index] = lists[index].next
+            if lists[index]:
+                heapq.heappush(que, (lists[index].val, index))
+        return newhead.next
 
 # @lc code=end
