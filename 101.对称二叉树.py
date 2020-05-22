@@ -50,13 +50,33 @@
 
 class Solution:
     def isSymmetric(self, root: TreeNode) -> bool:
-        def isMirror(p1, p2):
+        # def isMirror(p1, p2):
+        #     if not p1 and not p2:
+        #         return True
+        #     if not p1 or not p2:
+        #         return False
+        #     if p1.val != p2.val:
+        #         return False
+        #     return isMirror(p1.left, p2.right) and isMirror(p1.right, p2.left)
+        # return isMirror(root, root)
+
+        def check(p1, p2):
             if not p1 and not p2:
                 return True
             if not p1 or not p2:
                 return False
             if p1.val != p2.val:
                 return False
-            return isMirror(p1.left, p2.right) and isMirror(p1.right, p2.left)
-        return isMirror(root, root)
+            return True
+        from queue import deque
+        que = deque()
+        que.append((root, root))
+        while que:
+            p, q = que.popleft()
+            if not check(p, q):
+                return False
+            if p:
+                que.append((p.left, q.right))
+                que.append((p.right, q.left))
+        return True
 # @lc code=end
