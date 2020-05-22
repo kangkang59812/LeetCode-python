@@ -48,6 +48,7 @@ class Solution:
             return []
         m = len(matrix)
         n = len(matrix[0])
+        # 根据左上角坐标，对5*5来说最后一圈左上角坐标5>*2 ,对6*6来说是也是6>2*2
         count = (min(m, n)+1)//2
         res = []
         for i in range(count):
