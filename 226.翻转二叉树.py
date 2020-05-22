@@ -51,13 +51,27 @@
 
 class Solution:
     def invertTree(self, root: TreeNode) -> TreeNode:
-        def inverseOrder(root):
-            if root:
-                # tmpleft=inverseOrder(root.left)
-                # tmpright=inverseOrder(root.right)
-                root.right, root.left = inverseOrder(
-                    root.left), inverseOrder(root.right)
-                return root
+        # def inverseOrder(root):
+        #     if root:
+        #         # tmpleft=inverseOrder(root.left)
+        #         # tmpright=inverseOrder(root.right)
+        #         root.right, root.left = inverseOrder(
+        #             root.left), inverseOrder(root.right)
+        #         return root
 
-        return inverseOrder(root)
+        # return inverseOrder(root)
+        from queue import Queue
+        if not root:
+            return root
+        q = Queue()
+        q.put(root)
+        while not q.empty():
+            p = q.get()
+            p.left, p.right = p.right, p.left
+            if p.left:
+                q.put(p.left)
+            if p.right:
+                q.put(p.right)
+        return root
+
 # @lc code=end
