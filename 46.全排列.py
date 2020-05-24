@@ -35,21 +35,41 @@
 
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        # def backtrack(begin, n, path, res):
+        def backtrack(begin, n, path, res):
+            if len(path) == n:
+                res.append(path.copy())
+                return
+            for i in range(begin, n):
+                nums[i], nums[begin] = nums[begin], nums[i]
+                path.append(nums[begin])
+                backtrack(begin+1, n, path, res)
+                path.pop()
+                nums[begin], nums[i] = nums[i], nums[begin]
+        res = []
+        path = []
+        n = len(nums)
+        backtrack(0, n, path, res)
+        return res
+
+        # def backtrack(begin, n, path):
+        #     nonlocal res, used
         #     if len(path) == n:
         #         res.append(path.copy())
         #         return
-        #     for i in range(begin, n):
-        #         nums[i], nums[begin] = nums[begin], nums[i]
-        #         path.append(nums[begin])
-        #         backtrack(begin+1, n, path, res)
-        #         path.pop()
-        #         nums[begin], nums[i] = nums[i], nums[begin]
+        #     for i in range(0, n):
+        #         if not used[i]:
+        #             path.append(nums[i])
+        #             used[i] = True
+        #             backtrack(begin+1, n, path)
+        #             path.pop()
+        #             used[i] = False
         # res = []
         # path = []
         # n = len(nums)
-        # backtrack(0, n, path, res)
+        # used = [False]*n
+        # backtrack(0, n, path)
         # return res
-        from itertools import permutations
-        return list(permutations(nums, len(nums)))
+
+        # from itertools import permutations
+        # return list(permutations(nums, len(nums)))
 # @lc code=end
