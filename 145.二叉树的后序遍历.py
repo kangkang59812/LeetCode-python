@@ -45,16 +45,33 @@ class Solution:
             return[]
         res = []
         stack = [root]
-        # 前序遍历逆向，入栈左右反一下即可
+        # # 前序遍历逆向，入栈左右反一下即可
+        # while stack:
+
+        #     node = stack.pop()
+        #     res.append(node.val)
+        #     if node.left:
+        #         stack.append(node.left)
+        #     if node.right:
+        #         stack.append(node.right)
+
+        # return res[::-1]
+
+        # 正常思路
+        # 
+        visited = set()
         while stack:
-
-            node = stack.pop()
-            res.append(node.val)
-            if node.left:
-                stack.append(node.left)
-            if node.right:
-                stack.append(node.right)
-
-        return res[::-1]
+            p = stack[-1]
+            while p.left and p.left not in visited:
+                stack.append(p.left)
+                p = p.left
+            if not p.left or p.left in visited:
+                if not p.right or p.right in visited:
+                    stack.pop()
+                    visited.add(p)
+                    res.append(p.val)
+                elif p.right or p.right not in visited:# 条件可不要
+                    stack.append(p.right)
+        return res
 
 # @lc code=end
