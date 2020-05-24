@@ -45,23 +45,30 @@
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
 
-        def helper(left=0, right=len(inorder)):
-            nonlocal pre_idx
-            if left == right:
-                return None
+        # def helper(left=0, right=len(inorder)):
+        #     nonlocal pre_idx
+        #     if left == right:
+        #         return None
 
-            rootVal = preorder[pre_idx]
-            root = TreeNode(rootVal)
+        #     rootVal = preorder[pre_idx]
+        #     root = TreeNode(rootVal)
 
-            index = idx_map[rootVal]
-            # 先左后右
-            pre_idx += 1
-            root.left = helper(left, index)
-            root.right = helper(index+1, right)
-            return root
+        #     index = idx_map[rootVal]
+        #     # 先左后右
+        #     pre_idx += 1
+        #     root.left = helper(left, index)
+        #     root.right = helper(index+1, right)
+        #     return root
 
-        pre_idx = 0
-        idx_map = {val: idx for idx, val in enumerate(inorder)}
-        return helper()
+        # pre_idx = 0
+        # idx_map = {val: idx for idx, val in enumerate(inorder)}
+        # return helper()
+        if len(preorder) == 0:
+            return None
+        root = TreeNode(preorder[0])
+        mid = inorder.index(preorder[0])
+        root.left = self.buildTree(preorder[1:mid+1], inorder[:mid])
+        root.right = self.buildTree(preorder[mid+1:], inorder[mid+1:])
+        return root
 
 # @lc code=end

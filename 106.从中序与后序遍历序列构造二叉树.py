@@ -45,21 +45,28 @@
 
 class Solution:
     def buildTree(self, inorder: List[int], postorder: List[int]) -> TreeNode:
-        def helper(left=0, right=len(inorder)):
-            if left == right:
-                return None
+        # def helper(left=0, right=len(inorder)):
+        #     if left == right:
+        #         return None
 
-            rootVal = postorder.pop()
-            root = TreeNode(rootVal)
+        #     rootVal = postorder.pop()
+        #     root = TreeNode(rootVal)
 
-            index = idx_map[rootVal]
+        #     index = idx_map[rootVal]
 
-            # 先右后左
-            root.right = helper(index+1, right)
-            root.left = helper(left, index)
+        #     # 先右后左
+        #     root.right = helper(index+1, right)
+        #     root.left = helper(left, index)
 
-            return root
+        #     return root
 
-        idx_map = {val: idx for idx, val in enumerate(inorder)}
-        return helper()
+        # idx_map = {val: idx for idx, val in enumerate(inorder)}
+        # return helper()
+        if len(postorder) == 0:
+            return None
+        root = TreeNode(postorder[-1])
+        mid = inorder.index(postorder[-1])
+        root.left = self.buildTree(inorder[:mid], postorder[:mid])
+        root.right = self.buildTree(inorder[mid+1:], postorder[mid:-1])
+        return root
 # @lc code=end
