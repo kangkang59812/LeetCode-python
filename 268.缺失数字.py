@@ -47,4 +47,6 @@ class Solution:
             a ^= nums[i]
             i += 1
         return a
+
+       
 # @lc code=end
