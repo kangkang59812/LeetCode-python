@@ -43,9 +43,25 @@
 
 class Solution:
     def maxDepth(self, root: TreeNode) -> int:
+        # if not root:
+        #     return 0
+        # else:
+        #     return max(self.maxDepth(root.left), self.maxDepth(root.right))+1
         if not root:
             return 0
-        else:
-            return max(self.maxDepth(root.left), self.maxDepth(root.right))+1
-
-# @lc code=end
+        paths = [[root]]
+        stack = [root]
+        depth = 0
+        while stack:
+            p = stack.pop()
+            path = paths.pop()
+            if not p.left and not p.right:
+                depth = max(depth, len(path))
+            if p.right:
+                stack.append(p.right)
+                paths.append(path+[p.right])
+            if p.left:
+                stack.append(p.left)
+                paths.append(path+[p.left])
+        return depth
+        # @lc code=end
