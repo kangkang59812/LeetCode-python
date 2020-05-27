@@ -79,5 +79,33 @@ class Solution:
 
     def isBalanced(self, root: TreeNode) -> bool:
 
-        return self.helper(root)[0]
+        # return self.helper(root)[0]
+
+        # 后序遍历
+        if not root:
+            return True
+        res = {None: (True, 0)}
+        stack = [root]
+        visited = set()
+        while stack:
+            p = stack[-1]
+            leftVisited = True
+            rightVisited = True
+            if p.right and p.right not in visited:
+                rightVisited = False
+                stack.append(p.right)
+            if p.left and p.left not in visited:
+                leftVisited = False
+                stack.append(p.left)
+            if leftVisited and rightVisited:
+                if abs(res[p.left][1]-res[p.right][1]) <= 1:
+                    res[p] = (True,
+                              max(res[p.left][1], res[p.right][1])+1)
+                    visited.add(p)
+                    stack.pop()
+                else:
+                    return False
+
+        return res[root][0]
+
         # @lc code=end
