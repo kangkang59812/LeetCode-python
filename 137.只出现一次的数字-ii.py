@@ -38,6 +38,9 @@
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
         x, y = 0, 0
+        # 相当于二进制每一位操作
+        # 当前位输入0，00->00,01->01,10->10
+        #          1，00->01,01->10,10->00
         for num in nums:
             y = ~x & (y ^ num)
             x = ~y & (x ^ num)
