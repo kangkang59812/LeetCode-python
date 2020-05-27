@@ -61,6 +61,7 @@ class Solution:
                 residue = target-candidates[i]
                 if residue < 0:
                     break
+                # 不同层级可以有相同的，相同层级不行
                 if i > begin and candidates[i-1] == candidates[i]:
                     continue
                 path.append(candidates[i])
