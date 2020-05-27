@@ -56,14 +56,28 @@
 
 class Solution:
     def kthSmallest(self, root: TreeNode, k: int) -> int:
+        # res = []
+        # 中序遍历
+        # def middle(root, res):
+        #     if root is not None:
+        #         middle(root.left, res)
+        #         res.append(root.val)
+        #         middle(root.right, res)
+        # middle(root, res)
+        # return res[k-1]
+        if not root:
+            return []
+        stack = [root]
         res = []
-
-        def middle(root, res):
-            if root is not None:
-                middle(root.left, res)
+        while root or stack:
+            if len(res) == k:
+                break
+            while root:
+                stack.append(root)
+                root = root.left
+            if stack:
+                root = stack.pop()
                 res.append(root.val)
-                middle(root.right, res)
-        middle(root, res)
-        return res[k-1]
-
-# @lc code=end
+                root = root.right
+        return res[-1]
+        # @lc code=end
