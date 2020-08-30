@@ -28,7 +28,20 @@
 # @lc code=start
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
-        maxValue=max(nums)
+        snums = set(nums)
+        if not snums:
+            return 0
+        res = 1
+        for num in snums:
+            if num-1 not in snums:
+                cur = num
+                count = 1
+                while cur+1 in snums:
+                    cur = cur+1
+                    count += 1
+
+                res = max(res, count)
+        return res
         
 # @lc code=end
 

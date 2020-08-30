@@ -45,14 +45,13 @@ class Solution:
         if nums[0] == 0:
             return False
         maxPos = 0
-        end = 0
+
         for i in range(len(nums)-1):
             if maxPos >= i: #【1,0,1,0】
                 maxPos = max(maxPos, i+nums[i])
                 if maxPos >= len(nums)-1:
                     return True
-                if i == end:
-                    end = maxPos
+
         return False
 
         # @lc code=end

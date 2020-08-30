@@ -59,17 +59,31 @@
 
 class Solution:
     def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+
+        # 贪婪算法
         if len(intervals) <= 1:
             return 0
-        intervals = sorted(intervals, key=lambda x: x[1])
-        count = 1
-        end = intervals[0][-1]
-        i = 0
-        while i < len(intervals):
-            if intervals[i][0] >= end:
-                count = count+1
-                end = intervals[i][-1]
-            i = i+1
 
-        return len(intervals)-count
-# @lc code=end
+        # 按结束时间排序
+
+        # intervals = sorted(intervals, key=lambda x: x[1])
+        # res = [intervals[0]]
+        # count = 1
+        # for i in range(1, len(intervals)):
+        #     if intervals[i][0] >= res[-1][1]:
+        #         res.append(intervals[i])
+        #         count += 1
+        # return len(intervals)-count
+
+        # 按开始时间排序
+        intervals = sorted(intervals, key=lambda x: x[0])
+        end = intervals[0][1]
+        count = 0
+        for i in range(1, len(intervals)):
+            if intervals[i][0] < end:
+                end = min(intervals[i][1], end)
+                count += 1
+            else:
+                end = intervals[i][1]
+        return count
+        # @lc code=end

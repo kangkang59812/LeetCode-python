@@ -41,19 +41,33 @@
 
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
+        # @functools.lru_cache(amount)
+        # def dp(res_amount):
+        #     if res_amount < 0:
+        #         return -1
+        #     if res_amount == 0:
+        #         return 0
+        #     min_number = float('inf')
+        #     for coin in coins:
+        #         res = dp(res_amount-coin)
+        #         if res >= 0 and res < min_number:
+        #             min_number = res+1
+        #     return min_number if min_number != float('inf') else -1
+        # if amount < 1:
+        #     return 0
+        # return dp(amount)
         @functools.lru_cache(amount)
-        def dp(res_amount):
-            if res_amount < 0:
+        def dp(n):
+            if n < 0:
                 return -1
-            if res_amount == 0:
+            if n == 0:
                 return 0
-            min_number = float('inf')
+            num = float('inf')
             for coin in coins:
-                res = dp(res_amount-coin)
-                if res >= 0 and res < min_number:
-                    min_number = res+1
-            return min_number if min_number != float('inf') else -1
-        if amount < 1:
-            return 0
+                res = dp(n-coin)
+                if res >= 0 and res < num:
+                    num = res+1
+            return num if num != float('inf') else -1
         return dp(amount)
+
 # @lc code=end

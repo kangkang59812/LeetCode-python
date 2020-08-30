@@ -80,11 +80,11 @@
 
 class Solution:
     def myAtoi(self, s: str) -> int:
-        
+
         maxInt = 2**31-1
         minInt = -2**31
         s = str.strip(s)
-        if len(s)==0:
+        if len(s) == 0:
             return 0
         if not s[0].isdigit() and (s[0] != '+' and s[0] != '-'):
             return 0

@@ -78,6 +78,12 @@
 
 class Solution:
     def isMatch(self, s: str, p: str) -> bool:
+        #   \ a b b b a
+        # \ 1 0 0 0 0 0
+        # a 0
+        # b
+        # *
+        # a
         dp = [[False]*(len(s)+1) for _ in range(len(p)+1)]
         dp[0][0] = True
         for i in range(1, len(p)):
@@ -85,6 +91,7 @@ class Solution:
         for i in range(len(p)):
             for j in range(len(s)):
                 if p[i] == '*':
+                    # 不需要a*和 需要1个
                     dp[i+1][j+1] = dp[i][j+1] or dp[i-1][j+1]
                     if p[i-1] == s[j] or p[i-1] == '.':
                         dp[i+1][j+1] |= dp[i+1][j]
